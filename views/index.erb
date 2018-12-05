@@ -12,9 +12,16 @@
     </p> -->
   	<br>
     <h4>❾¾ Menu</h4>
-    <input type='button' value='New Game'>
-    <input type='button' value='Load Game'>
-    
-    
+    <form>
+      <!-- <input type='button' value='New Game' name='gameState'>
+      <input type='button' value='Load Game'>
+       --><input type='text' name='email'>
+      <input type='submit'>
+    </form>
+    <% if @name %>
+    <h1>Hello <%= @name %></h1>
+    <% end %>
+    <!-- <%= session %> -->
+
   </body>
 </html>
