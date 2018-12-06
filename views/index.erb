@@ -16,14 +16,16 @@
       <input type='text' name='name'>
       <input type='submit'>
     </form> 
+    <% if @message %>
+      <p><%= @message %></p>
+    <% end %>
+
     <% if @name %>
       <h1>Hello <%= @name %></h1>
     <% end %>
 
-    <% if @message %>
-      <p><%= @message %></p>
-    <% end %>
     
+
     <ul>
       <% @names.each do |name| %>
         <li><%= name %></li>

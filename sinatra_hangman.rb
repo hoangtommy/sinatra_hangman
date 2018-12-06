@@ -18,6 +18,7 @@ def read_names
 end
 
 
+
 post '/index' do
   @name = params[:name]
   store_name('names.txt', @name)
@@ -26,7 +27,7 @@ post '/index' do
 end
 
 get '/index' do
-  @message = session[:message]
+  @message = session.delete(:message)
   @name = params[:name]
   @names = read_names
   erb :index
