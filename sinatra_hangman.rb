@@ -3,29 +3,31 @@ if development?
   require 'sinatra/reloader'
 end
 
-# enable :sessions
+enable :sessions
 
-# get '/' do
-#   'value = ' << session[:value].inspect
-# end
-
-# get '/:value' do
-#   session['value'] = params['value']
-# end
-
+# writing to an external file
 def store_name(filename, string)
   File.open(filename, 'a+') do |file|
   	file.puts(string)
   end
 end
 
-get '/' do
-  @name = params['email']
-  store_name('names.txt', @name)
-  erb :index
+def read_names
+  return [] unless File.exist?('names.txt')
+  File.read('names.txt').split('\n')
 end
 
-# get '/' do
-#   @session = session  
-#   erb :index, :locals => {:session => session}
-# end
+
+post '/index' do
+  @name = params[:name]
+  store_name('names.txt', @name)
+  session[:message] = "successfully logged #{@name}."
+  redirect "/index?name=#{@name}"
+end
+
+get '/index' do
+  @message = session[:message]
+  @name = params[:name]
+  @names = read_names
+  erb :index
+end
