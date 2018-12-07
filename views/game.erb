@@ -4,7 +4,7 @@
   <body>
   	<h2>Hogwarts Hangman</h2>
     <br>
-    <h4>A <%= @word.length %> letter word</h4>
+    <h4>A <%= @word.scan(/[a-z]/).length %> letter word</h4>
 
     <p><%= @word %></p>
 <!-- 
