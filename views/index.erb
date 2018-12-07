@@ -3,33 +3,31 @@
   </head>
   <body>
   	<h3>Hogwarts Hangman</h3>
+    <h5>Instructions</h5>
     <!-- <p>
       Like the regular hangman, you'll be given a word represented by blank spaces.
       You will have 6 guesses to figure out the word. 
       You can guess a single letter or you can attempt to guess the entire word. 
-      If guessing the entire word, you won't get feedback on which letters are and aren\'t present.
+      If guessing the entire word, you won't get feedback on which letters are and aren't present.
       To save the game at any time, click the 'save' button.
     </p> -->
   	<br>
-    <h4>❾¾ Menu</h4>
-    <form action='/index' method='post'>
-      <input type='text' name='name'>
-      <input type='submit'>
+    <h4>A % letter word</h4>
+
+    <p><%= @word %></p>
+
+    <p><%= @blanks_to_fill %></p>
+    <br>
+    <p><%= @letters_used %></p>
+    <br>
+    <p><%= @guesses_left %></p>
+
+
+    <form action='/' method='post'>
+      <input type='text' name='guess'>
+      <input type='submit' value='lumos!'>
     </form> 
-    <% if @message %>
-      <p><%= @message %></p>
-    <% end %>
 
-    <% if @name %>
-      <h1>Hello <%= @name %></h1>
-    <% end %>
-
-    
-
-    <ul>
-      <% @names.each do |name| %>
-        <li><%= name %></li>
-      <% end %>
-    </ul>
+    <%= @guess1 %>
   </body>
 </html>
