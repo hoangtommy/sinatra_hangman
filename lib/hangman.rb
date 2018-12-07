@@ -1,6 +1,6 @@
 # Class can create instances of the game Hangman
 class Game
-  require './moduleDisplay.rb'
+  require_relative 'moduleDisplay.rb'
   require 'json'
 
   include Display
@@ -157,5 +157,3 @@ class Game
   	end
   end
 end
-
-n = Game.new
