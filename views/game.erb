@@ -4,23 +4,28 @@
   <body>
   	<h2>Hogwarts Hangman</h2>
     <br>
-    <h4>A % letter word</h4>
+    <h4>A <%= @word.length %> letter word</h4>
 
     <p><%= @word %></p>
-
+<!-- 
     <p><%= @blanks_to_fill %></p>
     <br>
     <p><%= @letters_used %></p>
     <br>
     <p><%= @guesses_left %></p>
 
+ -->
+
+    <br>
+    <p><%= @guesses_left %> guesses left</p>
+    <br>
 
     <form action='/game' method='post'>
-      <input type='text' pattern='[a-zA-z-]+' title='must be a letter or a word' name='guess'>
+      <input type='text' pattern='[a-zA-z- ]+' maxlength='<%= @word.length %>' title='must be a letter or a word' name='guess'>
       <input type='submit' value='guess!'>
     </form> 
 
-    <%= @guess1 %>
+    '<%= @guess %>'
 
 
     <!-- lose: https://www.youtube.com/watch?v=SeAnMpNVRDw -->
