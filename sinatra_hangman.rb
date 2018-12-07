@@ -15,7 +15,7 @@ post '/game' do
 end
 
 get '/game' do
-  @word = session[:word]
+  @word = get_random_word
   @guess = session[:guess]
   erb :game
 end
@@ -25,12 +25,12 @@ helpers do
     @guesses_left = 6
     @letters_used = []
     @word = get_random_word
-    # session[:word] = @word
-    @blanks_to_fill = Array.new(@word.length)
+    session[:word] = @word
+    # @blanks_to_fill = Array.new(@word.length)
   end
 
-  def get_random_word
-    i = rand(5)
-    ['harry', 'ron', 'snape', 'dumbledore', 'sirius'][i]
+   def get_random_word
+    dictionary = File.open('lib/hogwartsDictionary.txt').readlines
+    word = dictionary[rand(dictionary.length)].strip.downcase
   end
 end
