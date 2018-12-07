@@ -1,0 +1,28 @@
+<html>
+  <head>
+  </head>
+  <body>
+  	<h2>Hogwarts Hangman</h2>
+    <br>
+    <h4>A % letter word</h4>
+
+    <p><%= @word %></p>
+
+    <p><%= @blanks_to_fill %></p>
+    <br>
+    <p><%= @letters_used %></p>
+    <br>
+    <p><%= @guesses_left %></p>
+
+
+    <form action='/game' method='post'>
+      <input type='text' name='guess'>
+      <input type='submit' value='guess!'>
+    </form> 
+
+    <%= @guess1 %>
+
+
+    <!-- lose: https://www.youtube.com/watch?v=SeAnMpNVRDw -->
+  </body>
+</html>

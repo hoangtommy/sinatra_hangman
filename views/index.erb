@@ -2,32 +2,22 @@
   <head>
   </head>
   <body>
-  	<h3>Hogwarts Hangman</h3>
-    <h5>Instructions</h5>
-    <!-- <p>
+  	<h2>Hogwarts Hangman</h2>
+    <br>
+    <br>
+    <h3>Instructions</h3>
+    <p>
       Like the regular hangman, you'll be given a word represented by blank spaces.
-      You will have 6 guesses to figure out the word. 
+      <br>
+      You will have 6 guesses to figure out the word.
+      <br>
       You can guess a single letter or you can attempt to guess the entire word. 
+      <br>
       If guessing the entire word, you won't get feedback on which letters are and aren't present.
+      <br>
       To save the game at any time, click the 'save' button.
-    </p> -->
+    </p>
   	<br>
-    <h4>A % letter word</h4>
-
-    <p><%= @word %></p>
-
-    <p><%= @blanks_to_fill %></p>
-    <br>
-    <p><%= @letters_used %></p>
-    <br>
-    <p><%= @guesses_left %></p>
-
-
-    <form action='/' method='post'>
-      <input type='text' name='guess'>
-      <input type='submit' value='lumos!'>
-    </form> 
-
-    <%= @guess1 %>
+    <h4><a href='/game'>Start</a></h4>
   </body>
 </html>
