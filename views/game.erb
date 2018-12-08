@@ -4,11 +4,15 @@
   <body>
   	<h2>Hogwarts Hangman</h2>
     <br>
-    <h4>A <%= @word.scan(/[a-z]/).length %> letter word</h4>
+    <h4>A <%= @word_length %> letter word</h4>
+    <br>
+    <p><%= @blanks_to_fill %></p>
 
     <p><%= @word %></p>
+
+
 <!-- 
-    <p><%= @blanks_to_fill %></p>
+    <p></p>
     <br>
     
     <br>
