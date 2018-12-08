@@ -10,7 +10,7 @@
 <!-- 
     <p><%= @blanks_to_fill %></p>
     <br>
-    <p><%= @letters_used %></p>
+    
     <br>
     <p><%= @guesses_left %></p>
 
@@ -21,11 +21,13 @@
     <br>
 
     <form action='/game' method='post'>
-      <input type='text' pattern='[a-zA-z- ]+' maxlength='<%= @word.length %>' title='must be a letter or a word' name='guess'>
+      <input type='text' pattern='[a-zA-z- ']+' maxlength='<%= @word.length %>' title='must be a letter or a word' name='guess'>
       <input type='submit' value='guess!'>
     </form> 
 
     '<%= @guess %>'
+    <br>
+    <p>letters used: <%= @letters_used %></p>
 
 
     <!-- lose: https://www.youtube.com/watch?v=SeAnMpNVRDw -->

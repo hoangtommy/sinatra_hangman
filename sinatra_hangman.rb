@@ -16,19 +16,25 @@ post '/game' do
 end
 
 get '/game' do
-  @word = session[:word]
-  @guess = session[:guess]
+  display_shit
   erb :game
 end
 
 helpers do
   def set_game
-    @guesses_left = 6
-    @letters_used = []
+    session[:guesses_left] = 6
+    session[:letters_used] = []
     session[:word] = get_random_word
   end
 
-   def get_random_word
+  def display_shit
+    @guesses_left = session[:guesses_left]
+    @letters_used = session[:letters_used]
+  	@word = session[:word]
+    @guess = session[:guess]
+  end
+
+  def get_random_word
     dictionary = File.open('lib/hogwartsDictionary.txt').readlines
     word = dictionary[rand(dictionary.length)].strip.downcase
   end
