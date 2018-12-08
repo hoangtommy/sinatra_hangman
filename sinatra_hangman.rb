@@ -5,6 +5,7 @@ require './lib/hangman.rb'
 enable :sessions
 
 get '/' do
+  set_game
   erb :index
 end
 
@@ -15,7 +16,7 @@ post '/game' do
 end
 
 get '/game' do
-  @word = get_random_word
+  @word = session[:word]
   @guess = session[:guess]
   erb :game
 end
@@ -24,9 +25,7 @@ helpers do
   def set_game
     @guesses_left = 6
     @letters_used = []
-    @word = get_random_word
-    session[:word] = @word
-    # @blanks_to_fill = Array.new(@word.length)
+    session[:word] = get_random_word
   end
 
    def get_random_word
