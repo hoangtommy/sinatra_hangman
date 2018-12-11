@@ -12,10 +12,10 @@ end
 post '/game' do
   @guess = params[:guess]
   session[:guess] = @guess
-  
+
   #process guess
   session[:letters_used] << session[:guess] unless session[:letters_used].include?(@guess)
-  session[:guesses_left] -= 1
+  session[:guesses_left] = 6 - session[:letters_used].length
   redirect "/game?guess=#{@guess}"
 end
 
