@@ -12,6 +12,7 @@ end
 post '/game' do
   @guess = params[:guess]
   session[:guess] = @guess
+  
   #process guess
   session[:letters_used] << session[:guess] unless session[:letters_used].include?(@guess)
   session[:guesses_left] -= 1
@@ -66,7 +67,6 @@ helpers do
   end
 
   def display_hangman(turns_left)
-  	turns_left
   	case(turns_left)
   	when 5
   	 puts 'turns left: ϟϟϟϟϟ'
