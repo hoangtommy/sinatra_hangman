@@ -30,6 +30,7 @@ helpers do
     session[:guesses_left] = 6
     session[:previous_guesses] = []
     session[:word] = get_random_word
+    session[:blanks_to_fill] = parse_word_to_blanks(session[:word])
   end
 
   def display_shit
@@ -38,8 +39,7 @@ helpers do
   	@word = session[:word]
   	@word_length = @word.scan(/[a-z]/).length
     @guess = session[:guess]
-
-    @blanks_to_fill = get_feedback(hide(@word))
+    @blanks_to_fill = session[:blanks_to_fill]
   end
 
   def get_random_word
@@ -47,24 +47,12 @@ helpers do
     word = dictionary[rand(dictionary.length)].strip.downcase
   end
 
-  def hide(word)
-  	chars = []
-  	word.split('').each do |char|
-  	  char =~ /[\s\W]/ ? chars << char : chars << nil
-  	end
-  	chars
-  end
-
-  def get_feedback(hidden_chars)
-  	feedback = Array.new(@word_length)
-    hidden_chars.each_with_index do |char, idx|
-      if char.nil?
-        feedback[idx] = '__'
-      else
-        feedback[idx] = char
-      end
+  def parse_word_to_blanks(word)
+    blanks_to_fill = Array.new(word.length)
+    word.split('').each_with_index do |char, idx|
+      blanks_to_fill[idx] = char if char =~ /[\s\W]/
     end
-    feedback.join(' ')
+    blanks_to_fill
   end
 
 end
