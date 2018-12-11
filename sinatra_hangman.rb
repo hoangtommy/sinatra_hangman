@@ -14,8 +14,11 @@ post '/game' do
   session[:guess] = @guess
 
   #process guess
-  session[:letters_used] << session[:guess] unless session[:letters_used].include?(@guess)
-  session[:guesses_left] = 6 - session[:letters_used].length
+  session[:previous_guesses] << session[:guess] unless session[:previous_guesses].include?(@guess)
+  session[:guesses_left] = 6 - session[:previous_guesses].length
+  
+
+
   redirect "/game?guess=#{@guess}"
 end
 
@@ -27,13 +30,13 @@ end
 helpers do
   def set_game
     session[:guesses_left] = 6
-    session[:letters_used] = []
+    session[:previous_guesses] = []
     session[:word] = get_random_word
   end
 
   def display_shit
     @guesses_left = session[:guesses_left]
-    @letters_used = session[:letters_used]
+    @previous_guesses = session[:previous_guesses]
   	@word = session[:word]
   	@word_length = @word.scan(/[a-z]/).length
     @guess = session[:guess]
@@ -64,26 +67,6 @@ helpers do
       end
     end
     feedback.join(' ')
-  end
-
-  def display_hangman(turns_left)
-  	case(turns_left)
-  	when 5
-  	 puts 'turns left: ϟϟϟϟϟ'
-  	when 4
-  	 puts 'turns left: ϟϟϟϟ'
-  	when 3
-  	 puts 'turns left: ϟϟϟ'
-  	when 2
-  	 puts 'turns left: ϟϟ'
-  	when 1
-  	 puts 'turns left: ϟ'
-  	end
-  end
-
-  def display_letters_used(letters)
-  	puts "Letters used: #{letters.join(', ')}"
-  	puts ''
   end
 
   
