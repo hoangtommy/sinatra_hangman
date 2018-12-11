@@ -10,14 +10,12 @@ get '/' do
 end
 
 post '/game' do
-  @guess = params[:guess]
-  session[:guess] = @guess
+  session[:guess] = params[:guess]
 
   #process guess
   session[:previous_guesses] << session[:guess] unless session[:previous_guesses].include?(@guess)
   session[:guesses_left] = 6 - session[:previous_guesses].length
   
-
 
   redirect "/game?guess=#{@guess}"
 end
@@ -68,7 +66,5 @@ helpers do
     end
     feedback.join(' ')
   end
-
-  
 
 end
