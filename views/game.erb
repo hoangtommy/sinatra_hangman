@@ -4,12 +4,11 @@
   <body>
   	<h2>Hogwarts Hangman</h2>
     <br>
-    <h4>A <%= @word_length %> letter word</h4>
+    <img src='images/hangman<%= @guesses_left %>.png' width=700px>
     <br>
-    <p><%= @word %></p>
-    <br>
-    <p>Blanks to fill: <%= @blanks_to_fill.inspect %></p>
-
+    <h4>A <%= @word_length %> letter word:</h4>
+    <p><%= @blanks_to_fill %></p>
+    <!-- <p><%= @word %></p> -->
     <br>
     <p><%= @guesses_left %> guesses left</p>
     <br>
@@ -24,7 +23,5 @@
     <br>
     <p>Previous Guesses: <%= @previous_guesses %></p>
 
-
-    <!-- lose: https://www.youtube.com/watch?v=SeAnMpNVRDw -->
   </body>
 </html>
