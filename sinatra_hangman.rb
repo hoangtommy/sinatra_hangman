@@ -17,8 +17,6 @@ post '/game' do
     session[:error_message] = 'you\'ve already used this guess'
   else
     analyze_guess(session[:guess])
-    update_previous_guesses
-    update_guesses_left
   end
 
   redirect "/game?guess=#{@guess}"
@@ -70,7 +68,12 @@ helpers do
         next if !session[:blanks_to_fill][idx].nil?
         session[:blanks_to_fill][idx] = letter if guess == letter
       end
+    else
+      #tom, is it okay practice to call two other methods from this helper method?
+      update_guesses_left
+      update_previous_guesses
     end
+
     session[:blanks_to_fill]
   end
 
