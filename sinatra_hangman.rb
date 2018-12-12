@@ -110,4 +110,8 @@ helpers do
     session[:guesses_left] = 6 - session[:previous_guesses].length
   end
 
+  def win?
+
+  end
+
 end
