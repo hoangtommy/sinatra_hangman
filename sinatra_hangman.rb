@@ -32,7 +32,7 @@ helpers do
     session[:guesses_left] = 6
     session[:previous_guesses] = []
     session[:word] = get_random_word
-    session[:blanks_to_fill] = turn_word_to_blanks(session[:word])
+    session[:blanks_to_fill] = hide_letters(session[:word])
   end
 
   def display_shit
@@ -41,7 +41,7 @@ helpers do
   	@word = session[:word]
   	@word_length = @word.scan(/[a-z]/).length
     @guess = session[:guess]
-    @blanks_to_fill = session[:blanks_to_fill]
+    @blanks_to_fill = display_feedback(session[:blanks_to_fill])
     @error_message = session.delete(:error_message)
   end
 
@@ -50,7 +50,7 @@ helpers do
     word = dictionary[rand(dictionary.length)].strip.downcase
   end
 
-  def turn_word_to_blanks(word)
+  def hide_letters(word)
     blanks_to_fill = Array.new(word.length)
     word.split('').each_with_index do |char, idx|
       if char =~ /[\s\W]/
@@ -63,6 +63,7 @@ helpers do
   end
 
   def analyze_guess(guess)
+    #had to use session[:word] here since it seems I can't access @instance variables @word
     if session[:word].include?(guess)
       session[:word].split('').each_with_index do |letter, idx|
         next if !session[:blanks_to_fill][idx].nil?
@@ -70,11 +71,23 @@ helpers do
       end
     else
       #tom, is it okay practice to call two other methods from this helper method?
-      update_guesses_left
       update_previous_guesses
+      update_guesses_left
     end
+  end
 
-    session[:blanks_to_fill]
+  def display_feedback(hidden_word) # [nil, 'a', nil, nil, 'c']
+    feedback = []
+    hidden_word.each_with_index do |char, idx|
+      if char.nil?
+        feedback[idx] = '__'
+      elsif char =~ /[\s\W]/
+        feedback[idx] = " #{char} "
+      else
+        feedback[idx] = char
+      end
+    end
+    feedback
   end
 
   def update_previous_guesses
