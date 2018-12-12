@@ -1,17 +1,16 @@
 <html>
   <head>
+  	<link rel='stylesheet' type='text/css' href='/css/styles.css'>
   </head>
   <body>
-  	<h2>Hogwarts Hangman</h2>
+  	<h1>Hogwarts Hangman</h1>
     <br>
     <img src='images/hangman<%= @guesses_left %>.png' width=700px>
     <br>
     <h4>A <%= @word_length %> letter word:</h4>
     <p><%= @blanks_to_fill %></p>
     <!-- <p><%= @word %></p> -->
-    <br>
     <p><%= @guesses_left %> guesses left</p>
-    <br>
 
     <form action='/game' method='post'>
       <input type='text' pattern='[^\d]+' maxlength='<%= @word.length %>' title='must be a letter or a word' name='guess'>
@@ -19,8 +18,7 @@
       <%= @error_message %>
     </form> 
 
-    '<%= @guess %>'
-    <br>
+    <!-- '<%= @guess %>' -->
     <p>Previous Guesses: <%= @previous_guesses %></p>
 
   </body>

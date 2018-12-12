@@ -1,0 +1,24 @@
+@font-face {
+	font-family: 'harry font';
+	src: url('/css/fonts/harry.ttf');
+}
+
+h1 {
+	color: black;
+	font-size: 8em;
+	padding-top: .5em;
+	font-family: 'harry font';
+}
+
+body {
+	background-image: url('http://static.wixstatic.com/media/ac91d08b77790a68032a572af12d1ffe.wix_mp_1024');
+	background-repeat: no-repeat;
+	background-size: cover;
+	text-align: center;
+}
+
+a {
+	font-family: 'harry font';
+	font-size: 2em;
+	font-color: #390100;
+}
