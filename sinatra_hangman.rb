@@ -12,12 +12,14 @@ end
 post '/game' do
   session[:guess] = params[:guess]
 
-
   if session[:previous_guesses].include?(session[:guess])
     session[:error_message] = 'you\'ve already used this guess'
   else
     analyze_guess(session[:guess])
   end
+
+  redirect '/win' if session[:blanks_to_fill].all? { |letter| !letter.nil? } || session[:guess] == session[:word]
+  redirect '/lose' if session[:guesses_left] < 1
 
   redirect "/game?guess=#{@guess}"
 end
@@ -25,6 +27,16 @@ end
 get '/game' do
   display_shit
   erb :game
+end
+
+get '/lose' do
+  @word = session[:word]
+  erb :lose
+end
+
+get '/win' do
+  @word = session[:word]
+  erb :win
 end
 
 helpers do
