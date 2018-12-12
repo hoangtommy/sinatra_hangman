@@ -17,8 +17,8 @@ post '/game' do
     session[:error_message] = 'you\'ve already used this guess'
   else
     # analyze_guess(session[:guess])
-    session[:previous_guesses] << session[:guess] unless session[:previous_guesses].include?(session[:guess])
-    session[:guesses_left] = 6 - session[:previous_guesses].length
+    update_previous_guesses
+    update_guesses_left
   end
 
   redirect "/game?guess=#{@guess}"
@@ -73,5 +73,12 @@ helpers do
     end
   end
 
+  def update_previous_guesses
+    session[:previous_guesses] << session[:guess]# unless session[:previous_guesses].include?(session[:guess])
+  end
+
+  def update_guesses_left
+    session[:guesses_left] = 6 - session[:previous_guesses].length
+  end
 
 end
