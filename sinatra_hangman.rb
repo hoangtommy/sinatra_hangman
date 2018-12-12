@@ -13,7 +13,7 @@ post '/game' do
   session[:guess] = params[:guess]
 
   #process guess
-  session[:previous_guesses] << session[:guess] unless session[:previous_guesses].include?(@guess)
+  session[:previous_guesses] << session[:guess] unless session[:previous_guesses].include?(session[:guess])
   session[:guesses_left] = 6 - session[:previous_guesses].length
   
 
@@ -54,5 +54,7 @@ helpers do
     end
     blanks_to_fill
   end
+
+
 
 end
