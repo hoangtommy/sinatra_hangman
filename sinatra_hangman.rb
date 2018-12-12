@@ -12,10 +12,14 @@ end
 post '/game' do
   session[:guess] = params[:guess]
 
-  #process guess
-  session[:previous_guesses] << session[:guess] unless session[:previous_guesses].include?(session[:guess])
-  session[:guesses_left] = 6 - session[:previous_guesses].length
-  
+
+  if session[:previous_guesses].include?(session[:guess])
+    session[:error_message] = 'you\'ve already used this guess'
+  else
+    # analyze_guess(session[:guess])
+    session[:previous_guesses] << session[:guess] unless session[:previous_guesses].include?(session[:guess])
+    session[:guesses_left] = 6 - session[:previous_guesses].length
+  end
 
   redirect "/game?guess=#{@guess}"
 end
@@ -30,7 +34,7 @@ helpers do
     session[:guesses_left] = 6
     session[:previous_guesses] = []
     session[:word] = get_random_word
-    session[:blanks_to_fill] = parse_word_to_blanks(session[:word])
+    session[:blanks_to_fill] = turn_word_to_blanks(session[:word])
   end
 
   def display_shit
@@ -40,6 +44,7 @@ helpers do
   	@word_length = @word.scan(/[a-z]/).length
     @guess = session[:guess]
     @blanks_to_fill = session[:blanks_to_fill]
+    @error_message = session.delete(:error_message)
   end
 
   def get_random_word
@@ -47,14 +52,26 @@ helpers do
     word = dictionary[rand(dictionary.length)].strip.downcase
   end
 
-  def parse_word_to_blanks(word)
+  def turn_word_to_blanks(word)
     blanks_to_fill = Array.new(word.length)
     word.split('').each_with_index do |char, idx|
-      blanks_to_fill[idx] = char if char =~ /[\s\W]/
+      if char =~ /[\s\W]/
+        blanks_to_fill[idx] = char
+      else
+        blanks_to_fill[idx] = nil
+      end
     end
     blanks_to_fill
   end
 
+  def analyze_guess(guess)
+    if @word.include?(guess)
+      @word.split('').each_with_index do |letter, idx|
+        next if !@blanks_to_fill[idx].nil?
+        @blanks_to_fill[idx] = letter if guess == letter
+      end
+    end
+  end
 
 
 end

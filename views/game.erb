@@ -17,6 +17,7 @@
     <form action='/game' method='post'>
       <input type='text' pattern='[^\d]+' maxlength='<%= @word.length %>' title='must be a letter or a word' name='guess'>
       <input type='submit' value='guess!'>
+      <%= @error_message %>
     </form> 
 
     '<%= @guess %>'
