@@ -16,7 +16,7 @@ post '/game' do
   if session[:previous_guesses].include?(session[:guess])
     session[:error_message] = 'you\'ve already used this guess'
   else
-    # analyze_guess(session[:guess])
+    analyze_guess(session[:guess])
     update_previous_guesses
     update_guesses_left
   end
@@ -65,16 +65,17 @@ helpers do
   end
 
   def analyze_guess(guess)
-    if @word.include?(guess)
-      @word.split('').each_with_index do |letter, idx|
-        next if !@blanks_to_fill[idx].nil?
-        @blanks_to_fill[idx] = letter if guess == letter
+    if session[:word].include?(guess)
+      session[:word].split('').each_with_index do |letter, idx|
+        next if !session[:blanks_to_fill][idx].nil?
+        session[:blanks_to_fill][idx] = letter if guess == letter
       end
     end
+    session[:blanks_to_fill]
   end
 
   def update_previous_guesses
-    session[:previous_guesses] << session[:guess]# unless session[:previous_guesses].include?(session[:guess])
+    session[:previous_guesses] << session[:guess]
   end
 
   def update_guesses_left
