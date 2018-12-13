@@ -83,7 +83,6 @@ helpers do
         session[:blanks_to_fill][idx] = letter if guess == letter
       end
     else
-      #tom, is it okay practice to call two other methods from this helper method?
       update_previous_guesses
       update_guesses_left
     end
@@ -94,8 +93,8 @@ helpers do
     hidden_word.each_with_index do |char, idx|
       if char.nil?
         feedback[idx] = '__'
-      # elsif char =~ /[\s\W]/
-      #   feedback[idx] = " space "
+      elsif char =~ /[\s\W]/
+        feedback[idx] = "&nbsp;&nbsp;&nbsp;"
       else
         feedback[idx] = char
       end
