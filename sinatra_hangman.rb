@@ -10,7 +10,7 @@ get '/' do
 end
 
 post '/game' do
-  session[:guess] = params[:guess]
+  session[:guess] = params[:guess].downcase
 
   if session[:previous_guesses].include?(session[:guess])
     session[:error_message] = 'you\'ve already used this guess'
