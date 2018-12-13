@@ -4,23 +4,15 @@
   </head>
   <body>
   	<h1>Hogwarts Hangman</h1>
-    <br>
-    <img src='images/hangman<%= @guesses_left %>.png' width=700px>
-    <br>
-    <h4>A <%= @word_length %> letter word:</h4>
-    <p><%= @blanks_to_fill %></p>
+    <img src='images/hangman<%= @guesses_left %>.png' width=500px>
+    <h4><%= @word_length %> letter word: &nbsp; <%= @blanks_to_fill %></h4>
     <!-- <p><%= @word %></p> -->
-    <p><%= @guesses_left %> guesses left</p>
-
-    <p>Previous Guesses: <%= @previous_guesses %></p>
+    <p><%= @guesses_left %> guesses left &nbsp;|&nbsp; Previous Guesses: <%= @previous_guesses %></p>
     <form action='/game' method='post'>
       <input type='text' pattern='[^\d]+' maxlength='<%= @word.length %>' title='must be a letter or a word' name='guess'>
       <input id='btn' type='submit' value='guess!'>
       <%= @error_message %>
     </form> 
-
-    <!-- '<%= @guess %>' -->
     <br>
-
   </body>
 </html>
