@@ -25,7 +25,7 @@ post '/game' do
 end
 
 get '/game' do
-  display_shit
+  display_variables
   erb :game
 end
 
@@ -45,16 +45,16 @@ helpers do
     session[:guesses_left] = 6
     session[:previous_guesses] = []
     session[:word] = get_random_word
-    session[:blanks_to_fill] = hide_letters(session[:word])
+    session[:blanks_to_fill] = hide_word(session[:word])
   end
 
-  def display_shit
+  def display_variables
     @guesses_left = session[:guesses_left]
-    @previous_guesses = session[:previous_guesses]
+    @previous_guesses = session[:previous_guesses].join(', ')
   	@word = session[:word]
   	@word_length = @word.scan(/[a-z]/).length
     @guess = session[:guess]
-    @blanks_to_fill = display_feedback(session[:blanks_to_fill])
+    @blanks_to_fill = hide_chars(session[:blanks_to_fill])
     @error_message = session.delete(:error_message)
   end
 
@@ -63,7 +63,7 @@ helpers do
     word = dictionary[rand(dictionary.length)].strip.downcase
   end
 
-  def hide_letters(word)
+  def hide_word(word)
     blanks_to_fill = Array.new(word.length)
     word.split('').each_with_index do |char, idx|
       if char =~ /[\s\W]/
@@ -75,22 +75,9 @@ helpers do
     blanks_to_fill
   end
 
-  def analyze_guess(guess)
-    #had to use session[:word] here since it seems I can't access @instance variables @word
-    if session[:word].include?(guess)
-      session[:word].split('').each_with_index do |letter, idx|
-        next if !session[:blanks_to_fill][idx].nil?
-        session[:blanks_to_fill][idx] = letter if guess == letter
-      end
-    else
-      update_previous_guesses
-      update_guesses_left
-    end
-  end
-
-  def display_feedback(hidden_word) # [nil, 'a', nil, nil, 'c']
+  def hide_chars(blanks_to_fill) # [nil, 'a', nil, nil, 'c']
     feedback = []
-    hidden_word.each_with_index do |char, idx|
+    blanks_to_fill.each_with_index do |char, idx|
       if char.nil?
         feedback[idx] = '__'
       elsif char =~ /[\s\W]/
@@ -100,6 +87,18 @@ helpers do
       end
     end
     feedback.join(' ')
+  end
+
+  def analyze_guess(guess)
+    if session[:word].include?(guess)
+      session[:word].split('').each_with_index do |letter, idx|
+        next if !session[:blanks_to_fill][idx].nil?
+        session[:blanks_to_fill][idx] = letter if guess == letter
+      end
+    else
+      update_previous_guesses
+      update_guesses_left
+    end
   end
 
   def update_previous_guesses
