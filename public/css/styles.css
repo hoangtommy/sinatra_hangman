@@ -19,9 +19,16 @@ body {
 
 a {
 	font-family: 'harry font';
-	font-size: 2em;
+	font-size: 3em;
 	font-color: #390100;
+	text-decoration: none;
+	font-color: black;
 }
+
+a:hover {
+	color: gray;
+}
+
 
 /*#btn {
 	background-image: url('https://cdn2.iconfinder.com/data/icons/harry-potter-outline-collection-1/60/25_-_Harry_Potter_-_Outline_-_Elder_Wand-512.png');

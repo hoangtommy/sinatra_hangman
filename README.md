@@ -2,7 +2,7 @@
 
 In this project I begin to learn MVC with the lightweight framework Sinatra. I adapt one of my existing games, Hogwarts Hangman, for the web. Adding pictures to display the player's progress.
 
-Play the game live [here]()
+Play the game live [here](https://powerful-wildwood-91516.herokuapp.com/)
 
 ## Project Reflection
 1. Implementing the concepts behind MVC was tough. Particularly wrapping my head around the various HTTP requests.
