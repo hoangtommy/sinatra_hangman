@@ -12,14 +12,15 @@
     <p><%= @word %></p>
     <p><%= @guesses_left %> guesses left</p>
 
+    <p>Previous Guesses: <%= @previous_guesses %></p>
     <form action='/game' method='post'>
       <input type='text' pattern='[^\d]+' maxlength='<%= @word.length %>' title='must be a letter or a word' name='guess'>
-      <input type='submit' value='guess!'>
+      <input id='btn' type='submit' value='guess!'>
       <%= @error_message %>
     </form> 
 
     <!-- '<%= @guess %>' -->
-    <p>Previous Guesses: <%= @previous_guesses %></p>
+    <br>
 
   </body>
 </html>

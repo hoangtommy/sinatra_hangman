@@ -40,6 +40,7 @@ get '/win' do
 end
 
 helpers do
+
   def set_game
     session[:guesses_left] = 6
     session[:previous_guesses] = []
@@ -93,13 +94,13 @@ helpers do
     hidden_word.each_with_index do |char, idx|
       if char.nil?
         feedback[idx] = '__'
-      elsif char =~ /[\s\W]/
-        feedback[idx] = " #{char} "
+      # elsif char =~ /[\s\W]/
+      #   feedback[idx] = " space "
       else
         feedback[idx] = char
       end
     end
-    feedback
+    feedback.join(' ')
   end
 
   def update_previous_guesses
@@ -108,10 +109,6 @@ helpers do
 
   def update_guesses_left
     session[:guesses_left] = 6 - session[:previous_guesses].length
-  end
-
-  def win?
-
   end
 
 end
