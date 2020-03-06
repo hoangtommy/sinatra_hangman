@@ -1,0 +1,38 @@
+@font-face {
+	/* font-family: 'NBI pro bold'; */
+	font-family: 'Verdana', 'Geneva', 'sans-serif'
+}
+
+h1 {
+  font-family: 'Verdana', 'Geneva', 'sans-serif'
+	color: white;
+	font-size: 6em;
+	padding-top: .4em;
+}
+
+body {
+	/* background-image: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.dmnews.com%2Fcustomer-experience%2Fnews%2F13057233%2Fwebsite-optimization-platform-optimizely-acquires-machine-learning-startup-synference&psig=AOvVaw3VC1vybdeF_JQ4x__TRGLk&ust=1583616072792000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOjCj-LjhugCFQAAAAAdAAAAABAE'); */
+	background-color: #F1F2F3;
+	background-repeat: no-repeat;
+	background-size: cover;
+	text-align: center;
+	font-family: 'Verdana', 'Geneva', 'sans-serif'
+}
+
+ul {
+	list-style: cirlce inside;
+}
+
+a {
+	/* font-family: 'harry font'; */
+	font-family: 'Verdana', 'Geneva', 'sans-serif'
+	font-size: 3em;
+	/* font-color: #390100; */
+	font-color: white;
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	color: #0038FF;
+}

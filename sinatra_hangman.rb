@@ -1,12 +1,35 @@
 require 'sinatra'
-require 'sinatra/reloader' if development?
+# require 'sinatra/reloader' if development?
 require './lib/hangman.rb'
+
+require 'optimizely'
+require 'optimizely/optimizely_factory'
+
+# Production sdk key
+sdk_key = 'BkMGxx4GNBK1i35RwNeYES'
+
+# Dev sdk key
+# sdk_key = 'TQFkGiY8MGw9ZqRYpnVtnH'
+
+# Initiate Optimizely client
+optimizely_instance = Optimizely::OptimizelyFactory.default_instance(sdk_key)
 
 enable :sessions
 
 get '/' do
+  @user_id = assign_user_id
+
+  # Optimizely activate experiment
+  @variation = optimizely_instance.activate('hangman', @user_id)
+  puts '.....variation is..' + @variation
+  puts '.....user id is..' + @user_id
+
   set_game
-  erb :index
+  if @variation == 'original'
+    erb :index
+  else
+    erb :index_variation
+  end
 end
 
 post '/game' do
@@ -16,6 +39,8 @@ post '/game' do
     session[:error_message] = 'you\'ve already used this guess'
   else
     analyze_guess(session[:guess])
+    # track click in Optimizely
+    optimizely_instance.track('click', @user_id)
   end
 
   redirect '/win' if session[:blanks_to_fill].all? { |letter| !letter.nil? } || session[:guess] == session[:word]
@@ -26,20 +51,37 @@ end
 
 get '/game' do
   display_variables
-  erb :game
+  if @variation == 'original'
+    erb :game
+  else
+    erb :game_variation
+  end
 end
 
 get '/lose' do
   @word = session[:word]
-  erb :lose
+  if @variation == 'original'
+    erb :lose
+  else
+    erb :lose_variation
+  end
 end
 
 get '/win' do
   @word = session[:word]
-  erb :win
+  if @variation == 'original'
+    erb :win
+  else
+    erb :win_variation
+  end
 end
 
 helpers do
+
+  def assign_user_id
+    num = rand(8)
+    'user' + num.to_s
+  end
 
   def set_game
     session[:guesses_left] = 6
@@ -59,7 +101,11 @@ helpers do
   end
 
   def get_random_word
-    dictionary = File.open('lib/hogwartsDictionary.txt').readlines
+    if @variation == 'original'
+      dictionary = File.open('lib/hogwartsDictionary.txt').readlines
+    else
+      dictionary = File.open('lib/optimizelyDictionary.txt').readlines
+    end
     word = dictionary[rand(dictionary.length)].strip.downcase
   end
 
