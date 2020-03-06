@@ -14,16 +14,16 @@ sdk_key = 'BkMGxx4GNBK1i35RwNeYES'
 # Initiate Optimizely client
 optimizely_instance = Optimizely::OptimizelyFactory.default_instance(sdk_key)
 
+@user_id = 'user' + rand(100).to_s
+
+# Optimizely activate experiment
+@variation = optimizely_instance.activate('hangman', @user_id)
+puts '.....variation is..' + @variation
+puts '.....user id is..' + @user_id
+
 enable :sessions
 
 get '/' do
-  @user_id = assign_user_id
-
-  # Optimizely activate experiment
-  @variation = optimizely_instance.activate('hangman', @user_id)
-  puts '.....variation is..' + @variation
-  puts '.....user id is..' + @user_id
-
   set_game
   if @variation == 'original'
     erb :index
@@ -33,14 +33,16 @@ get '/' do
 end
 
 post '/game' do
+  # track click in Optimizely
+  optimizely_instance.track('click', @user_id)
+  puts '~~~~~~~~~~~~~~~~tracking click event'
+
   session[:guess] = params[:guess].downcase
 
   if session[:previous_guesses].include?(session[:guess])
     session[:error_message] = 'you\'ve already used this guess'
   else
     analyze_guess(session[:guess])
-    # track click in Optimizely
-    optimizely_instance.track('click', @user_id)
   end
 
   redirect '/win' if session[:blanks_to_fill].all? { |letter| !letter.nil? } || session[:guess] == session[:word]
@@ -77,11 +79,6 @@ get '/win' do
 end
 
 helpers do
-
-  def assign_user_id
-    num = rand(8)
-    'user' + num.to_s
-  end
 
   def set_game
     session[:guesses_left] = 6
