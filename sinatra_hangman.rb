@@ -14,12 +14,12 @@ sdk_key = 'BkMGxx4GNBK1i35RwNeYES'
 # Initiate Optimizely client
 optimizely_instance = Optimizely::OptimizelyFactory.default_instance(sdk_key)
 
-@user_id = 'user' + rand(100).to_s
+USER_ID = 'user' + rand(100).to_s
 
 # Optimizely activate experiment
-@variation = optimizely_instance.activate('hangman', @user_id)
+@variation = optimizely_instance.activate('hangman', USER_ID)
 puts '.....variation is..' + @variation
-puts '.....user id is..' + @user_id
+puts '.....user id is..' + USER_ID
 
 enable :sessions
 
@@ -34,7 +34,7 @@ end
 
 post '/game' do
   # track click in Optimizely
-  optimizely_instance.track('click', @user_id)
+  optimizely_instance.track('click', USER_ID)
   puts '~~~~~~~~~~~~~~~~tracking click event'
 
   session[:guess] = params[:guess].downcase
