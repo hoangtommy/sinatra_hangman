@@ -1,7 +1,10 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    json (2.3.0)
     mustermann (1.0.3)
+    optimizely (1.2.3)
+      json (>= 1.8.3)
     rack (2.0.6)
     rack-protection (2.0.4)
       rack
@@ -16,7 +19,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  optimizely
   sinatra
 
 BUNDLED WITH
-   1.16.3
+   1.17.2
