@@ -17,15 +17,15 @@ optimizely_instance = Optimizely::OptimizelyFactory.default_instance(sdk_key)
 USER_ID = 'user' + rand(100).to_s
 
 # Optimizely activate experiment
-VARIATION = optimizely_instance.activate('hangman', USER_ID)
-puts '.....variation is..' + VARIATION
+@variation = optimizely_instance.activate('hangman', USER_ID)
+puts '.....variation is..' + @variation
 puts '.....user id is..' + USER_ID
 
 enable :sessions
 
 get '/' do
   set_game
-  if VARIATION == 'original'
+  if @variation == 'original'
     erb :index
   else
     erb :index_variation
@@ -53,7 +53,7 @@ end
 
 get '/game' do
   display_variables
-  if VARIATION == 'original'
+  if @variation == 'original'
     erb :game
   else
     erb :game_variation
@@ -62,7 +62,7 @@ end
 
 get '/lose' do
   @word = session[:word]
-  if VARIATION == 'original'
+  if @variation == 'original'
     erb :lose
   else
     erb :lose_variation
@@ -71,7 +71,7 @@ end
 
 get '/win' do
   @word = session[:word]
-  if VARIATION == 'original'
+  if @variation == 'original'
     erb :win
   else
     erb :win_variation
@@ -98,7 +98,7 @@ helpers do
   end
 
   def get_random_word
-    if VARIATION == 'original'
+    if @variation == 'original'
       dictionary = File.open('lib/hogwartsDictionary.txt').readlines
     else
       dictionary = File.open('lib/optimizelyDictionary.txt').readlines
