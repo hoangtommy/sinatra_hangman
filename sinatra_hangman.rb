@@ -7,7 +7,6 @@ require 'optimizely/optimizely_factory'
 
 # Production sdk key
 sdk_key = 'BkMGxx4GNBK1i35RwNeYES'
-
 # Dev sdk key
 # sdk_key = 'TQFkGiY8MGw9ZqRYpnVtnH'
 
